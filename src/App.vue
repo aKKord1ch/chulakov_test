@@ -1,5 +1,5 @@
 <script>
-import { computed, ref } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import ApplyTarif from './components/ApplyTarif.vue';
 import Beard from './components/Beard.vue';
 import CityModal from './components/CityModal.vue';
@@ -7,6 +7,7 @@ import HeaderComp from './components/HeaderComp.vue';
 import FormBlock from './components/innerComponents/FormBlock.vue';
 import InsertBlock from './components/InsertBlock.vue';
 import { useMyStore } from './stores/store';
+import AlertCity from './components/AlertCity.vue';
 
 export default {
   name: 'App',
@@ -16,47 +17,37 @@ export default {
     InsertBlock,
     FormBlock,
     ApplyTarif,
-    CityModal
+    CityModal,
+    AlertCity
   },
   setup() {
-    const store = useMyStore()
-    const getIsVisible = computed(() => store.getIsVisible)
+    const store = useMyStore();
+    const getIsVisible = computed(() => store.getIsVisible);
+    const getIsVisibleAlert = computed(() => store.getIsVisibleAlert);
+    const setLocalStorageUserCity = store.setLocalStorageUserCity
 
-    const toggleComponent = () => {
-      getIsVisible.value = !getIsVisible.value;
-      if (getIsVisible.value) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    }
-    const beforeEnter = (el) => {
-      el.style.transform = 'translateY(-100%)';
-      el.style.opacity = '0';
-    }
-    const leave = (el, done) => {
-      el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-      el.style.transform = 'translateY(-100%)'; 
-      el.style.opacity = '0';
-      done();
-    }
+    onBeforeMount(()=>{
+      setLocalStorageUserCity()
+    })
 
     return {
       getIsVisible,
-      toggleComponent,
-      beforeEnter,
-      leave
-    }
+      getIsVisibleAlert,
+      store
+    };
   }
-}
+};
+
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" @click="console.log(store)">
+
     <div class="wrapper">
 
       <header class="header">
-        <HeaderComp/>
+        <HeaderComp />
+        <AlertCity v-if="getIsVisibleAlert" />
       </header>
 
 
@@ -67,11 +58,9 @@ export default {
         <FormBlock />
         <ApplyTarif />
 
-        <transition name="fade" @before-enter="beforeEnter" @leave="leave">
-          <div v-if="getIsVisible" class="animated-component">
-            <CityModal class="city-modal-animated-block" />
-          </div>
-        </transition>
+        <div v-if="getIsVisible" class="animated-component ">
+          <CityModal class="city-modal-animated-block" />
+        </div>
 
       </main>
 
@@ -87,18 +76,8 @@ export default {
 .city-modal-animated-block {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
   transform: translateX(-50%);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 
 .main {
@@ -127,6 +106,7 @@ export default {
 
 .header {
   position: relative;
+  z-index: 1000;
 }
 
 .header::after {

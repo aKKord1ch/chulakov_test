@@ -12,13 +12,22 @@ export default {
 
       const setUserCity = store.setUserCity
       const setLocalStorageUserCity = store.setLocalStorageUserCity
-      const setIsVisible = computed(() => store.setIsVisible)
+      const setIsVisibleAlert = store.setIsVisibleAlert
+      const setIsVisible = store.setIsVisible
+      const getIsVisibleAlert = computed(() => store.getIsVisibleAlert)
+
+      const commonSet = () => {
+         if (getIsVisibleAlert.value){
+            setIsVisibleAlert()
+         }
+         setIsVisible()
+      }
 
       return {
          getUserCity,
          setLocalStorageUserCity,
          setUserCity,
-         setIsVisible
+         commonSet
       }
    }
 }
@@ -31,7 +40,7 @@ export default {
          <img src="../assets/Logo.svg" alt="" class="header__logo">
       </li>
       <li class="header__item">
-         <button @click="setIsVisible">
+         <button @click="commonSet">
             <img src="../assets/Location.png" alt="">
             <span>
                {{ getUserCity ? getUserCity : 'Ростов-на-Дону' }}
@@ -99,6 +108,9 @@ export default {
    border: none;
    padding: 0;
    margin: 0;
+
+   position: relative;
+   z-index: 10000;
 }
 
 .header__item button:hover {

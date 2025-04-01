@@ -1,4 +1,5 @@
 <script>
+import { computed, onBeforeMount, onBeforeUnmount, onMounted } from 'vue';
 import { useMyStore } from '../stores/store';
 
 export default {
@@ -6,7 +7,29 @@ export default {
    setup() {
       const store = useMyStore()
       const setUserCity = store.setUserCity
+      const setIsVisible = store.setIsVisible
+      const getIsVisible = computed(() => store.getIsVisible);
 
+
+      onBeforeMount(() => {
+         document.querySelector('body').style.overflow = 'hidden'
+      })
+      onBeforeUnmount(() => {
+         document.querySelector('body').style.overflow = 'auto'
+      })
+
+      onMounted(() => {
+         const items = document.querySelectorAll('.city__item')
+
+         console.log(items)
+
+         items.forEach(item => {
+            item.addEventListener('click', () => {
+               setIsVisible(!getIsVisible.value)
+               setUserCity(item.innerHTML)
+            })
+         })
+      })
 
       return {
          setUserCity
@@ -64,7 +87,7 @@ export default {
 </template>
 
 <style scoped>
-.city__item:hover{
+.city__item:hover {
    cursor: pointer;
 }
 
@@ -102,6 +125,10 @@ export default {
    flex-direction: column;
 
    gap: 5vw;
+
+   max-width: 1120px;
+
+   padding: 0 15px;
 }
 
 section {
@@ -111,11 +138,11 @@ section {
    display: flex;
    align-items: center;
 
-   padding-top: 114px;
    padding-bottom: 272px;
-}
+   padding-left: 20%;
 
-body {
-   overflow: hidden;
+   background-color: #1F2229;
+
+
 }
 </style>

@@ -8,6 +8,7 @@ export const useMyStore = defineStore("myStore", {
     sendedNumbers: null,
 
     isVisibleCityModal: false,
+    isVisibleAlert: true
   }),
   getters: {
     getUserCity() {
@@ -18,6 +19,9 @@ export const useMyStore = defineStore("myStore", {
     },
     getIsVisible() {
       return this.isVisibleCityModal;
+    },
+    getIsVisibleAlert() {
+      return this.isVisibleAlert
     },
   },
   actions: {
@@ -37,5 +41,9 @@ export const useMyStore = defineStore("myStore", {
     setIsVisible() {
       this.isVisibleCityModal = !this.isVisibleCityModal
     },
+    setIsVisibleAlert() {
+      this.isVisibleAlert = !this.isVisibleAlert
+    },
+
   },
 });
