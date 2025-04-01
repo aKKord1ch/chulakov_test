@@ -3,7 +3,8 @@ name: Deploy Vue App to GitHub Pages
 on:
   push:
     branches:
-      - main  # Запускать при пуше в main
+      - main  # Запуск при пуше в main
+  workflow_dispatch:  # 👈 Добавляет кнопку "Run workflow"
 
 permissions:
   contents: read
