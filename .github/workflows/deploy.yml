@@ -1,15 +1,9 @@
-name: Deploy Vue App to GitHub Pages
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - main  # Запуск при пуше в main
-  workflow_dispatch:  # 👈 Добавляет кнопку "Run workflow"
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+      - main  # Замените на нужную ветку
 
 jobs:
   deploy:
@@ -17,21 +11,20 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18  # Версия Node.js
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ACTIONS_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Project
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Папка с готовыми файлами
+      - name: Deploy via SSH
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no user@your-server.com "
+          cd /path/to/project &&
+          git pull origin main &&
+          npm install &&
+          npm run build &&
+          pm2 restart your-app-name"
