@@ -59,16 +59,16 @@ figcaption {
    font-size: 20px;
    line-height: 150%;
    letter-spacing: 0%;
-
    color: var(--main-color);
 
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 @media (max-width:1024px) {
    figcaption {
       padding-right: 10px;
       font-size: 16px;
-
    }
 }
 
@@ -91,9 +91,10 @@ figure img {
 figure {
    display: flex;
    flex-direction: row;
-
    align-items: center;
    gap: 0.5vw;
+
+   -ms-flex-direction: row;
 }
 
 @media (max-width:725px) {
@@ -106,9 +107,10 @@ figure {
    display: flex;
    flex-direction: row;
    justify-content: space-between;
-
    margin-top: 2.7vw;
 
+   -ms-flex-direction: row;
+   -ms-flex-pack: justify;
 }
 
 @media (max-width:725px) {
@@ -121,8 +123,9 @@ figure {
 .insert__container {
    display: flex;
    flex-direction: column;
-
    padding-bottom: 20px;
+
+   -ms-flex-direction: column;
 }
 
 .insert__title {
@@ -131,9 +134,7 @@ figure {
    font-size: 40px;
    line-height: 130%;
    letter-spacing: 0%;
-
    color: var(--main-color);
-
    margin-bottom: 1.5vw;
 }
 
@@ -157,7 +158,6 @@ figure {
    line-height: 150%;
    letter-spacing: 0%;
    color: var(--main-color);
-
 }
 
 @media (max-width:768px) {

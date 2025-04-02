@@ -3,39 +3,38 @@ import { computed, ref } from 'vue';
 import { useMyStore } from '../../stores/store';
 import Notify from './Notify.vue';
 
-
 export default {
    name: 'FormBlock',
    components: {
       Notify
    },
    setup() {
-      const store = useMyStore()
-      const getPhoneErrors = computed(() => store.getPhoneErrors)
-      const getFormErrors = computed(() => store.getFormErrors)
-      const getSendedNumber = store.getSendedNumber
-      const setPhoneErrors = store.setPhoneErrors
-      const setFormErrors = store.setFormErrors
-      const setSendPromo = store.setSendPromo
-      const setPhoneNumbers = store.setPhoneNumbers
-      const setPhoneNumber = store.setPhoneNumber
+      const store = useMyStore();
+      const getPhoneErrors = computed(() => store.getPhoneErrors);
+      const getFormErrors = computed(() => store.getFormErrors);
+      const getSendedNumber = store.getSendedNumber;
+      const setPhoneErrors = store.setPhoneErrors;
+      const setFormErrors = store.setFormErrors;
+      const setSendPromo = store.setSendPromo;
+      const setPhoneNumbers = store.setPhoneNumbers;
+      const setPhoneNumber = store.setPhoneNumber;
 
       const phoneNumber = ref("");
       const isChecked = ref(false);
 
       const commonSetIsChecked = () => {
-         isChecked.value = !isChecked.value
-         setFormErrors(!isChecked.value)
-      }
+         isChecked.value = !isChecked.value;
+         setFormErrors(!isChecked.value);
+      };
 
-      const formatPhoneNumber = (value) => {
-         let numbers = value.replace(/\D/g, "");
-
-         if (numbers.length > 11) numbers = numbers.slice(0, 11);
+      const updatePhone = (event) => {
+         let numbers = event.target.value.replace(/\D/g, "");
 
          if (numbers.startsWith("7") || numbers.startsWith("8")) {
             numbers = numbers.substring(1);
          }
+
+         numbers = numbers.slice(0, 10);
 
          let formatted = "+7 ";
          if (numbers.length > 0) formatted += `(${numbers.slice(0, 3)}`;
@@ -43,71 +42,64 @@ export default {
          if (numbers.length > 6) formatted += `-${numbers.slice(6, 8)}`;
          if (numbers.length > 8) formatted += `-${numbers.slice(8, 10)}`;
 
-         return formatted;
+         phoneNumber.value = formatted;
       };
-
-      const formattedPhone = computed({
-         get: () => phoneNumber.value,
-         set: (newValue) => {
-            phoneNumber.value = formatPhoneNumber(newValue);
-         },
-      });
 
       const validatePhone = () => {
          const regex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
 
          if (!regex.test(phoneNumber.value)) {
-            setPhoneErrors(true)
+            setPhoneErrors(true);
          } else {
-            setPhoneErrors(null)
+            setPhoneErrors(null);
          }
       };
 
       const sendPromo = () => {
-
-         validatePhone()
+         validatePhone();
          if (getPhoneErrors.value) {
-            return
+            return;
          }
 
          if (!isChecked.value) {
-            setFormErrors(true)
-            return
+            setFormErrors(true);
+            return;
          } else {
-            setFormErrors(null)
+            setFormErrors(null);
          }
 
          if (getSendedNumber(phoneNumber.value)) {
             document.querySelectorAll('#already-exists').forEach(item => {
-               item.style.display = 'flex'
-            })
+               item.style.display = 'flex';
+            });
 
             setTimeout(() => {
                document.querySelectorAll('#already-exists').forEach(item => {
-                  item.style.display = 'none'
-               })
+                  item.style.display = 'none';
+               });
             }, 2000);
-            return
+            return;
          } else {
-            setPhoneNumber(phoneNumber.value)
-            setPhoneNumbers(phoneNumber.value)
+            setPhoneNumber(phoneNumber.value);
+            setPhoneNumbers(phoneNumber.value);
          }
 
-         setSendPromo(true)
-      }
+         setSendPromo(true);
+      };
 
       return {
          getSendedNumber,
          validatePhone,
-         formattedPhone,
+         phoneNumber,
          getPhoneErrors,
          getFormErrors,
          sendPromo,
          isChecked,
-         commonSetIsChecked
-      }
+         commonSetIsChecked,
+         updatePhone
+      };
    }
-}
+};
 </script>
 
 <template>
@@ -120,7 +112,7 @@ export default {
 
             <label class="phone__container">
                <span>Номер телефона</span>
-               <input type="tel" v-model="formattedPhone" maxlength="18" @blur="validatePhone"
+               <input type="tel" v-model="phoneNumber" @input="updatePhone" maxlength="18" @blur="validatePhone"
                   placeholder="+7 (XXX) XXX-XX-XX" required />
             </label>
 
@@ -173,6 +165,7 @@ export default {
    </section>
 
 </template>
+
 
 <style scoped>
 .desk-title {
@@ -233,7 +226,6 @@ aside {
    }
 }
 
-
 @media (max-width: 768px) {
    .aside__item img {
       width: 10%;
@@ -249,9 +241,7 @@ aside {
 .aside__item {
    display: flex;
    flex-direction: row;
-
    align-items: center;
-
    gap: 1.5vw;
 }
 
@@ -265,7 +255,6 @@ aside {
    .aside__item {
       flex-direction: column;
       align-items: start;
-
       gap: 5vw;
    }
 }
@@ -273,10 +262,8 @@ aside {
 .aside__list {
    width: 100%;
    height: fit-content;
-
    display: flex;
    flex-direction: column;
-
    gap: 2vw;
 }
 
@@ -298,30 +285,24 @@ aside {
    margin-top: 3.5vw;
 }
 
-#promo-form__send-button span {
+#promo-form__send-button {
    font-family: var(--main-font);
    font-weight: 700;
    font-size: 16px;
    line-height: 22px;
    letter-spacing: 0%;
    text-align: center;
-
    color: #000;
 }
 
 #promo-form__send-button {
    margin-top: 2.1vw;
-
    width: 218px;
    height: 48px;
-
    display: flex;
    align-items: center;
    justify-content: center;
-
    border-radius: 48px;
-   border: none;
-
    background-color: #fff;
 }
 
@@ -368,10 +349,8 @@ aside {
    transform: rotate(45deg);
 }
 
-
 .condition__container span a {
    color: var(--main-color) !important;
-
 }
 
 .condition__container span {
@@ -380,26 +359,21 @@ aside {
    font-size: 16px;
    line-height: 138%;
    letter-spacing: 0%;
-
    color: var(--main-color);
 }
 
 .condition__container {
    display: flex;
    flex-direction: row;
-
    align-items: start;
-
    margin-top: 25px;
 }
 
 .phone__container::after {
    content: '';
-
    width: 100%;
    height: 2px;
    background-color: rgba(143, 147, 153, 1);
-
    position: absolute;
    bottom: 0;
    left: 0;
@@ -411,6 +385,16 @@ aside {
    outline: none;
 }
 
+
+.phone__container:has(input:focus) span {
+   color: #fff;
+}
+
+.phone__container:has(input:focus)::after {
+   background-color: #fff;
+   color: #fff;
+}
+
 .phone__container input::placeholder {
    color: rgba(143, 147, 153, 1) !important;
 }
@@ -419,13 +403,11 @@ aside {
 .phone__container input::placeholder {
    background-color: transparent;
    border: none;
-
    font-family: var(--main-font);
    font-weight: 400;
    font-size: 16px;
    line-height: 138%;
    letter-spacing: 0%;
-
    color: #fff;
 }
 
@@ -435,39 +417,30 @@ aside {
    font-size: 13px;
    line-height: 18px;
    letter-spacing: 0%;
-
    color: rgba(143, 147, 153, 1);
-
    padding-bottom: 5px;
 }
 
 .phone__container {
    margin-top: 4.5vw;
    padding-bottom: 5px;
-
    display: flex;
    flex-direction: column;
-
-
    position: relative;
 }
 
 fieldset {
    display: flex;
    flex-direction: column;
-
    padding: 0;
    margin: 0;
-
    border: none;
 }
 
 section {
    display: flex;
    flex-direction: row;
-
    justify-content: space-between;
-
    background-color: #1F2229;
 }
 
@@ -493,5 +466,56 @@ form {
       width: 100%;
       margin: 15vw auto 15vw auto;
    }
+}
+
+#promo-form__send-button {
+   display: inline-block;
+   border-radius: 10rem;
+   transition: all 0.3s;
+   position: relative;
+   overflow: hidden;
+   z-index: 1;
+}
+
+#promo-form__send-button::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: #fff;
+   border-radius: 10rem;
+   z-index: -2;
+}
+
+#promo-form__send-button::before {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 0%;
+   height: 100%;
+   background-color: #1F2229;
+   transition: all 0.3s;
+   border-radius: 10rem;
+   z-index: -1;
+}
+
+#promo-form__send-button:hover {
+   color: #fff;
+   border: 2px solid #fff !important;
+}
+
+#promo-form__send-button:hover::before {
+   width: 100%;
+}
+
+#promo-form__send-button:active::before {
+   background-color: #50ccfc;
+}
+
+#promo-form__send-button:active {
+   color: #1F2229 !important;
 }
 </style>

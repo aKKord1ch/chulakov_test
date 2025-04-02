@@ -76,6 +76,9 @@ export default {
    letter-spacing: 0%;
 
    color: rgba(143, 147, 153, 1);
+
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 .left-part__item span {
@@ -86,6 +89,9 @@ export default {
    letter-spacing: 0%;
 
    color: rgba(143, 147, 153, 1);
+
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 .conditions__item {
@@ -96,6 +102,9 @@ export default {
    letter-spacing: 0%;
 
    color: var(--main-color);
+
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 .upper__conditions,
@@ -105,6 +114,8 @@ export default {
 
    align-items: center;
    gap: 12px;
+
+   -ms-flex-direction: row;
 }
 
 @media (max-width: 768px) {
@@ -113,7 +124,6 @@ export default {
    }
 }
 
-
 .upper__socials,
 .bottom__left-part {
    display: flex;
@@ -121,8 +131,9 @@ export default {
 
    align-items: center;
    gap: 15px;
-}
 
+   -ms-flex-direction: row;
+}
 
 @media (max-width: 768px) {
    .bottom__left-part {
@@ -156,6 +167,8 @@ export default {
    position: relative;
 
    padding-bottom: 10px;
+
+   -ms-flex-direction: row;
 }
 
 .bottom__footer {

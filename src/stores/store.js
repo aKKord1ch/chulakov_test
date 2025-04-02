@@ -14,8 +14,20 @@ export const useMyStore = defineStore("myStore", {
 
     isVisibleCityModal: false,
     isVisibleAlert: true,
+
+    employees: [
+      { id: 1, name: "Иван Петров", position: "Разработчик" },
+      { id: 2, name: "Анна Смирнова", position: "Дизайнер" },
+      { id: 3, name: "Сергей Иванов", position: "Менеджер" },
+      { id: 4, name: "Мария Козлова", position: "Аналитик" },
+      { id: 5, name: "Дмитрий Соколов", position: "Тестировщик" }
+    ]
+
   }),
   getters: {
+    getEmployees(){ 
+      return this.employees
+    },
     getUserCity() {
       return this.userCity;
     },

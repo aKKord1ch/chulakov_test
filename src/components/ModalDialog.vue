@@ -29,7 +29,7 @@ export default {
       <div class="modal-content">
          <button class="close-btn" @click="closeModal">✖</button>
          <slot></slot>
-         <FormBlock class="pad"/>
+         <FormBlock class="pad" />
       </div>
    </dialog>
 </template>
@@ -37,6 +37,7 @@ export default {
 
 <style scoped>
 dialog::backdrop {
+   background-color: rgba(0, 0, 0, 0.8);
    background-color: rgb(0, 0, 0, 0.8);
 }
 
@@ -45,6 +46,10 @@ dialog {
    position: fixed;
    top: 50%;
    transform: translateY(-50%);
+
+   -webkit-overflow-scrolling: touch;
+   -webkit-transition: opacity 0.3s ease;
+   transition: opacity 0.3s ease;
 }
 
 .pad {
@@ -54,6 +59,8 @@ dialog {
 .modal {
    border: none;
    border-radius: 10px;
+   -webkit-border-radius: 10px;
+   -moz-border-radius: 10px;
 }
 
 .modal-content {
@@ -69,5 +76,12 @@ dialog {
    font-size: 20px;
    cursor: pointer;
    color: #fff;
+
+   -webkit-transition: color 0.2s ease;
+   transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+   color: rgba(255, 255, 255, 0.7);
 }
 </style>

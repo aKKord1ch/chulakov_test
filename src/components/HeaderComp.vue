@@ -17,7 +17,7 @@ export default {
       const getIsVisibleAlert = computed(() => store.getIsVisibleAlert)
 
       const commonSet = () => {
-         if (getIsVisibleAlert.value){
+         if (getIsVisibleAlert.value) {
             setIsVisibleAlert()
          }
          setIsVisible()
@@ -52,12 +52,24 @@ export default {
 </template>
 
 <style scoped>
+.header__item button img {
+   transition: transform 0.8s ease-in-out;
+   transform: rotateY(0);
+}
+
+.header__item button:hover img {
+   transform: rotateY(360deg);
+}
+
 .header__list {
    padding: 22px 30px;
 
    display: flex;
    flex-direction: row;
    justify-content: space-between;
+
+   -ms-flex-direction: row;
+   -ms-flex-pack: justify;
 }
 
 @media (max-width:375.99px) {
@@ -73,8 +85,9 @@ export default {
    gap: 5px;
 
    align-items: center;
-}
 
+   -ms-flex-direction: row;
+}
 
 @media (max-width:375.99px) {
    .header__logo {
@@ -94,6 +107,9 @@ export default {
    letter-spacing: 0%;
 
    color: #fff;
+
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 .header__item button {
@@ -111,6 +127,8 @@ export default {
 
    position: relative;
    z-index: 10000;
+
+   -ms-flex-direction: row;
 }
 
 .header__item button:hover {

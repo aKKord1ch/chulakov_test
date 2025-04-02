@@ -24,7 +24,7 @@ export default {
          getSendedNumbersArray,
          getPhoneNumber
       }
-      
+
    }
 }
 </script>
@@ -57,17 +57,17 @@ export default {
             Необходимо ввести корректный номер телефона
          </span>
       </div>
-      
+
    </section>
 
 </template>
 
 <style scoped>
-#already-exists{
+#already-exists {
    display: none;
 }
 
-.notify__container{
+.notify__container {
    display: flex;
    flex-direction: column;
    gap: 1vw;
@@ -79,25 +79,21 @@ export default {
    font-size: 14px;
    line-height: 138%;
    letter-spacing: 0%;
-
    color: var(--main-color);
 }
 
 .notification__container {
    width: 100%;
    height: fit-content;
-
    border-radius: 8px;
-
    background-color: rgba(38, 43, 54, 1);
-
    padding: 12px;
-
    display: flex;
-
    gap: 12px;
-
    box-sizing: border-box;
+
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
 }
 
 .ok-n {
@@ -106,5 +102,25 @@ export default {
 
 .al-n {
    align-items: start;
+}
+
+@supports (display: -webkit-flex) {
+   .notify__container {
+      display: -webkit-flex;
+   }
+
+   .notification__container {
+      display: -webkit-flex;
+   }
+}
+
+@supports (display: flex) {
+   .notify__container {
+      display: flex;
+   }
+
+   .notification__container {
+      display: flex;
+   }
 }
 </style>

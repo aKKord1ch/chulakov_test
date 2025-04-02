@@ -104,7 +104,7 @@ export default {
     </div>
 
     <!-- Добавляем ref на модальное окно -->
-    <ModalDialog ref="modalRef" class="limiter"/>
+    <ModalDialog ref="modalRef" class="limiter" />
 
     <button v-if="showButton" class="scroll-top" :class="{ show: showButton }" @click="scrollToTop">
       ↑
@@ -148,6 +148,7 @@ export default {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 2;
 }
 
 .main {
