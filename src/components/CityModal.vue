@@ -101,12 +101,28 @@ export default {
    color: var(--main-color);
 }
 
+@media (max-width:768px) {
+   .city__item {
+      font-size: 18px;
+   }
+}
+
 .city__list {
    display: grid;
    grid-template-rows: repeat(4, auto);
    grid-template-columns: repeat(3, auto);
 
    gap: 25px 50px;
+}
+
+@media (max-width:768px) {
+   .city__list {
+      display: grid;
+      grid-template-rows: repeat(6, auto);
+      grid-template-columns: repeat(2, auto);
+
+      gap: 25px 50px;
+   }
 }
 
 .city__title {
@@ -120,6 +136,13 @@ export default {
 
 }
 
+
+@media (max-width:768px) {
+.city__title {
+      font-size: 24px;
+   }
+}
+
 .modal__container {
    display: flex;
    flex-direction: column;
@@ -129,6 +152,12 @@ export default {
    max-width: 1120px;
 
    padding: 0 15px;
+}
+
+@media (max-width:768px) {
+   .modal__container {
+      gap: 17vw;
+   }
 }
 
 section {
@@ -142,7 +171,11 @@ section {
    padding-left: 20%;
 
    background-color: #1F2229;
+}
 
-
+@media (max-width:768px) {
+   section {
+      padding-left: unset;
+   }
 }
 </style>

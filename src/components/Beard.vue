@@ -2,6 +2,9 @@
 
 export default {
    name: 'Beard',
+   props: {
+      openModal: Function
+   },
    components: {
 
    },
@@ -26,7 +29,7 @@ export default {
                <nobr>Тариф «Мой онлайн+»</nobr> и <nobr>1 ТБ трафика</nobr> в подарок для новых абонентов
             </span>
 
-            <button>
+            <button @click="$emit('open-modal')">
                <span>
                   Принять участие
                </span>

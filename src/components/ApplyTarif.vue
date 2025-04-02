@@ -5,7 +5,13 @@ export default {
    components: {
    },
    setup() {
+
+      const openHref = () => {
+         window.open('https://rostov.tele2.ru', '_blank')
+      }
+
       return {
+         openHref
       }
    }
 }
@@ -22,7 +28,7 @@ export default {
             Перейдите в магазин, оформите тариф «Мой онлайн+» и на страничке активации введите ваш промокод. Готово!
          </span>
 
-         <button class="desk-button">
+         <button class="desk-button" @click="openHref">
             <span>
                Оформить тариф
             </span>
@@ -31,7 +37,7 @@ export default {
 
       <figure>
          <img src="../assets/phone.webp" alt="">
-         <button class="mob-button">
+         <button class="mob-button" @click="openHref">
             <span>
                Оформить тариф
             </span>
@@ -90,6 +96,7 @@ figure img {
       width: 50%;
    }
 }
+
 @media (max-width:425px) {
    figure img {
       width: 80%;

@@ -1,4 +1,5 @@
 <script>
+import { computed, ref } from 'vue';
 import { useMyStore } from '../../stores/store';
 import Notify from './Notify.vue';
 
@@ -10,10 +11,100 @@ export default {
    },
    setup() {
       const store = useMyStore()
-      const getSendedNumbers = store.getSendedNumbers
+      const getPhoneErrors = computed(() => store.getPhoneErrors)
+      const getFormErrors = computed(() => store.getFormErrors)
+      const getSendedNumber = store.getSendedNumber
+      const setPhoneErrors = store.setPhoneErrors
+      const setFormErrors = store.setFormErrors
+      const setSendPromo = store.setSendPromo
+      const setPhoneNumbers = store.setPhoneNumbers
+      const setPhoneNumber = store.setPhoneNumber
+
+      const phoneNumber = ref("");
+      const isChecked = ref(false);
+
+      const commonSetIsChecked = () => {
+         isChecked.value = !isChecked.value
+         setFormErrors(!isChecked.value)
+      }
+
+      const formatPhoneNumber = (value) => {
+         let numbers = value.replace(/\D/g, "");
+
+         if (numbers.length > 11) numbers = numbers.slice(0, 11);
+
+         if (numbers.startsWith("7") || numbers.startsWith("8")) {
+            numbers = numbers.substring(1);
+         }
+
+         let formatted = "+7 ";
+         if (numbers.length > 0) formatted += `(${numbers.slice(0, 3)}`;
+         if (numbers.length > 3) formatted += `) ${numbers.slice(3, 6)}`;
+         if (numbers.length > 6) formatted += `-${numbers.slice(6, 8)}`;
+         if (numbers.length > 8) formatted += `-${numbers.slice(8, 10)}`;
+
+         return formatted;
+      };
+
+      const formattedPhone = computed({
+         get: () => phoneNumber.value,
+         set: (newValue) => {
+            phoneNumber.value = formatPhoneNumber(newValue);
+         },
+      });
+
+      const validatePhone = () => {
+         const regex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+
+         if (!regex.test(phoneNumber.value)) {
+            setPhoneErrors(true)
+         } else {
+            setPhoneErrors(null)
+         }
+      };
+
+      const sendPromo = () => {
+
+         validatePhone()
+         if (getPhoneErrors.value) {
+            return
+         }
+
+         if (!isChecked.value) {
+            setFormErrors(true)
+            return
+         } else {
+            setFormErrors(null)
+         }
+
+         if (getSendedNumber(phoneNumber.value)) {
+            document.querySelectorAll('#already-exists').forEach(item => {
+               item.style.display = 'flex'
+            })
+
+            setTimeout(() => {
+               document.querySelectorAll('#already-exists').forEach(item => {
+                  item.style.display = 'none'
+               })
+            }, 2000);
+            return
+         } else {
+            setPhoneNumber(phoneNumber.value)
+            setPhoneNumbers(phoneNumber.value)
+         }
+
+         setSendPromo(true)
+      }
 
       return {
-         getSendedNumbers
+         getSendedNumber,
+         validatePhone,
+         formattedPhone,
+         getPhoneErrors,
+         getFormErrors,
+         sendPromo,
+         isChecked,
+         commonSetIsChecked
       }
    }
 }
@@ -23,35 +114,32 @@ export default {
 
    <section>
 
-      <form id="promo-form">
+      <form id="promo-form" @submit.prevent="sendPromo">
          <fieldset>
             <img src="../../assets/Несколько шагов и 1 ТБ — ваш.svg" alt="" class="desk-title">
 
             <label class="phone__container">
-               <span>
-                  Номер телефона
-               </span>
-               <input type="tel" placeholder="+7 (XXX) XXX-XX-XX" pattern="\+7 $\d{3}$ \d{3}-\d{2}-\d{2}" required>
+               <span>Номер телефона</span>
+               <input type="tel" v-model="formattedPhone" maxlength="18" @blur="validatePhone"
+                  placeholder="+7 (XXX) XXX-XX-XX" required />
             </label>
 
             <label class="condition__container">
-               <input type="checkbox" class="custom-che">
+               <input type="checkbox" class="custom-che" @click="commonSetIsChecked">
                <span class="checkmark"></span>
                <span>
                   Даю согласие на обработку персональных данных. <nobr><a href="#">Условия соглашения</a>.</nobr>
                </span>
             </label>
 
-            <button id="promo-form__send-button">
-               <span>
-                  Выслать промокод
-               </span>
+            <button id="promo-form__send-button" type="button" @click="sendPromo">
+               <span>Выслать промокод</span>
             </button>
 
          </fieldset>
 
          <div class="notify-common-container">
-            <Notify v-if="getSendedNumbers" />
+            <Notify />
          </div>
       </form>
 
@@ -68,7 +156,7 @@ export default {
             <li class="aside__item">
                <img src="../../assets/item2.svg" alt="">
                <span>
-                  Перейдите на <a href="https://msk.t2.ru">сайт Tele2</a> и активируйте промокод при подключении на
+                  Перейдите на <a href="https://rostov.t2.ru">сайт Tele2</a> и активируйте промокод при подключении на
                   тариф
                   «Мой Онлайн+»
                </span>
@@ -138,6 +226,7 @@ aside {
       font-size: 14px;
    }
 }
+
 @media (max-width: 425px) {
    .aside__item span {
       font-size: 18px;
@@ -378,6 +467,8 @@ section {
    flex-direction: row;
 
    justify-content: space-between;
+
+   background-color: #1F2229;
 }
 
 @media (max-width:768px) {

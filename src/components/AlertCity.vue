@@ -1,5 +1,5 @@
 <script>
-import { computed, onBeforeMount, onBeforeUnmount, onMounted, watch } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, watch, watchEffect } from 'vue';
 import { useMyStore } from '../stores/store';
 
 export default {
@@ -13,13 +13,12 @@ export default {
       const getIsVisibleAlert = computed(() => store.getIsVisibleAlert);
       const getUserCity = computed(() => store.getUserCity);
 
-      watch(getIsVisibleAlert.value, () => {
-         if (getIsVisibleAlert.value) {
-            document.querySelector('body').style.overflow = 'hidden'
-         } else {
-            document.querySelector('body').style.overflow = 'auto'
-         }
-      })
+      onBeforeMount(() => {
+         document.body.style.overflow = 'hidden';
+      });
+      onBeforeUnmount(() => {
+         document.body.style.overflow = 'auto';
+      });
 
       const commonSet = () => {
          setIsVisibleAlert()
@@ -98,6 +97,10 @@ export default {
    justify-content: center;
 }
 
+.buttons__item:hover {
+   cursor: pointer;
+}
+
 .buttons__list {
    display: flex;
    flex-direction: row;
@@ -117,8 +120,8 @@ export default {
 }
 
 .back-drop {
-   width: 1000vw;
-   height: 1000vh;
+   width: 100%;
+   height: 100vh;
 
    background-color: rgba(0, 0, 0, 0.8);
 
@@ -165,5 +168,12 @@ section {
    padding: 16px 16px 24px 16px;
 
    box-sizing: border-box;
+}
+
+@media (max-width: 425px) {
+   section {
+      width: 90%;
+      right: 5%;
+   }
 }
 </style>

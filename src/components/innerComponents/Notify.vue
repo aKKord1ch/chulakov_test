@@ -1,33 +1,78 @@
 <script>
+import { computed } from 'vue'
+import { useMyStore } from '../../stores/store'
+
 
 export default {
    name: 'Notify',
    components: {
    },
    setup() {
+      const store = useMyStore()
+      const getSendedNumber = computed(() => store.getSendedNumber)
+      const getSendedNumbersArray = computed(() => store.getSendedNumbersArray)
+      const getPhoneErrors = computed(() => store.getPhoneErrors)
+      const getFormErrors = computed(() => store.getFormErrors)
+      const getSendPromos = computed(() => store.getSendPromo)
+      const getPhoneNumber = computed(() => store.getPhoneNumber)
 
+      return {
+         getSendedNumber,
+         getPhoneErrors,
+         getFormErrors,
+         getSendPromos,
+         getSendedNumbersArray,
+         getPhoneNumber
+      }
+      
    }
 }
 </script>
 
 <template>
 
-   <div class="notification__container ok-n">
-      <img src="../../assets/ok-notify.svg" alt="">
-      <span>
-         Промокод выслан на ваш номер
-      </span>
-   </div>
-   <div class="notification__container al-n">
-      <img src="../../assets/alert-notify.svg" alt="">
-      <span>
-         На этот номер уже выслан промокод, на один номер можно получить один промокод
-      </span>
-   </div>
+   <section class="notify__container">
+
+      <div class="notification__container ok-n" v-if="getSendPromos">
+         <img src="../../assets/ok-notify.svg" alt="">
+         <span>
+            Промокод выслан на ваш номер
+         </span>
+      </div>
+      <div class="notification__container al-n" id="already-exists">
+         <img src="../../assets/alert-notify.svg" alt="">
+         <span>
+            На этот номер уже выслан промокод, на один номер можно получить один промокод
+         </span>
+      </div>
+      <div class="notification__container al-n" v-if="getFormErrors">
+         <img src="../../assets/alert-notify.svg" alt="">
+         <span>
+            Необходимо принять условия соглашения
+         </span>
+      </div>
+      <div class="notification__container al-n" v-if="getPhoneErrors">
+         <img src="../../assets/alert-notify.svg" alt="">
+         <span>
+            Необходимо ввести корректный номер телефона
+         </span>
+      </div>
+      
+   </section>
 
 </template>
 
 <style scoped>
+#already-exists{
+   display: none;
+}
+
+.notify__container{
+   display: flex;
+   flex-direction: column;
+   gap: 1vw;
+}
+
 .notification__container span {
    font-family: var(--main-font);
    font-weight: 400;
@@ -40,7 +85,7 @@ export default {
 
 .notification__container {
    width: 100%;
-   height: 48px;
+   height: fit-content;
 
    border-radius: 8px;
 
@@ -55,11 +100,11 @@ export default {
    box-sizing: border-box;
 }
 
-.ok-n{
+.ok-n {
    align-items: center;
 }
 
-.al-n{
+.al-n {
    align-items: start;
 }
 </style>
