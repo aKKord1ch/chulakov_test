@@ -19,22 +19,28 @@ export default {
    <section class="upper__footer">
       <ul class="upper__socials">
          <li class="socials__item">
-            <img src="../assets/twitter.svg" alt="">
+            <a href="https://x.com/">
+               <img src="../assets/twitter.svg" alt="twitter">
+            </a>
          </li>
          <li class="socials__item">
-            <img src="../assets/vk.svg" alt="">
+            <a href="https://vk.com">
+               <img src="../assets/vk.svg" alt="vk">
+            </a>
          </li>
          <li class="socials__item">
-            <img src="../assets/facebook.svg" alt="">
+            <a href="https://www.facebook.com/">
+               <img src="../assets/facebook.svg" alt="facebook">
+            </a>
          </li>
       </ul>
 
       <ul class="upper__conditions">
          <li class="conditions__item">
-            Полные условия акци
+            Полные условия акции
          </li>
          <li class="conditions__item">
-            <img src="../assets/16plus.svg" alt="">
+            <img src="../assets/16plus.svg" alt="legality">
          </li>
       </ul>
    </section>
@@ -42,7 +48,9 @@ export default {
    <section class="bottom__footer">
       <ul class="bottom__left-part">
          <li class="left-part__item">
-            <img src="../assets/Logo__bottom.svg" alt="">
+            <a href="https://rostov.t2.ru" target="_blank">
+               <img src="../assets/Logo__bottom.svg" alt="tele2">
+            </a>
          </li>
          <li class="left-part__item">
             <span>
@@ -58,9 +66,11 @@ export default {
             </span>
          </li>
          <li class="right-part__item">
-            <span>
-               <img src="../assets/chul__logo.svg" alt="">
-            </span>
+            <a href="https://chulakov.ru/" target="_blank">
+               <span>
+                  <img src="../assets/chul__logo.svg" alt="chulakov studio">
+               </span>
+            </a>
          </li>
       </ul>
    </section>

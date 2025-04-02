@@ -37,7 +37,9 @@ export default {
 
    <ul class="header__list">
       <li class="header__item">
-         <img src="../assets/Logo.svg" alt="" class="header__logo">
+         <a href="https://rostov.t2.ru" target="_blank">
+            <img src="../assets/Logo.svg" alt="Tele2" title="Tele2" class="header__logo">
+         </a>
       </li>
       <li class="header__item">
          <button @click="commonSet">

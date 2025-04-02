@@ -37,7 +37,7 @@ export default {
          </section>
       </li>
       <li class="beard__item">
-         <img src="../assets/Boss1-2.webp" alt="" class="boss-img">
+         <img src="../assets/Boss1-2.webp" alt="Дядя с бородой" title="Дядя с бородой" class="boss-img">
       </li>
    </ul>
 

@@ -140,13 +140,13 @@ export default {
 
          <ul class="aside__list">
             <li class="aside__item">
-               <img src="../../assets/item1.svg" alt="">
+               <img src="../../assets/item1.svg" alt="Первый шаг" title="Первый шаг">
                <span>
                   Ведите свой номер телефона, затем дождитесь смс с промокодом для получения Тб
                </span>
             </li>
             <li class="aside__item">
-               <img src="../../assets/item2.svg" alt="">
+               <img src="../../assets/item2.svg" alt="Второй шаг" title="Второй шаг">
                <span>
                   Перейдите на <a href="https://rostov.t2.ru">сайт Tele2</a> и активируйте промокод при подключении на
                   тариф
@@ -154,7 +154,7 @@ export default {
                </span>
             </li>
             <li class="aside__item">
-               <img src="../../assets/item3.svg" alt="">
+               <img src="../../assets/item3.svg" alt="Третий шаг" title="Третий шаг">
                <span>
                   Используйте свой подарочный ТБ от Tele2 в течение всего года
                </span>

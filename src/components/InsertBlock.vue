@@ -24,7 +24,7 @@ export default {
       <ul class="insert_ops__list">
          <li class="insert__item">
             <figure>
-               <img src="../assets/1.svg" alt="">
+               <img src="../assets/1.svg" alt="Видео" title="Видео">
                <figcaption>
                   Около 500 часов видео
                </figcaption>
@@ -32,7 +32,7 @@ export default {
          </li>
          <li class="insert__item">
             <figure>
-               <img src="../assets/2.svg" alt="">
+               <img src="../assets/2.svg" alt="Музыка" title="Музыка">
                <figcaption>
                   Примерно 200 000 песен
                </figcaption>
@@ -40,7 +40,7 @@ export default {
          </li>
          <li class="insert__item">
             <figure>
-               <img src="../assets/3.svg" alt="">
+               <img src="../assets/3.svg" alt="Фото" title="Фото">
                <figcaption>
                   Порядка 300 000 фото
                </figcaption>

@@ -10,6 +10,7 @@ import { useMyStore } from './stores/store';
 import AlertCity from './components/AlertCity.vue';
 import FooterComp from './components/FooterComp.vue';
 import ModalDialog from './components/ModalDialog.vue';
+import EmployeeSlider from './components/EmployeeSlider.vue';
 
 export default {
   name: 'App',
@@ -22,7 +23,8 @@ export default {
     CityModal,
     AlertCity,
     FooterComp,
-    ModalDialog
+    ModalDialog,
+    EmployeeSlider
   },
   setup() {
     const store = useMyStore();
@@ -96,6 +98,7 @@ export default {
         <div v-if="getIsVisible" class="animated-component">
           <CityModal class="city-modal-animated-block" />
         </div>
+        <EmployeeSlider />
       </main>
 
       <footer class="footer limiter">

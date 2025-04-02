@@ -36,7 +36,7 @@ export default {
       </aside>
 
       <figure>
-         <img src="../assets/phone.webp" alt="">
+         <img src="../assets/phone.webp" alt="Оформить тариф" title="Оформить тариф">
          <button class="mob-button" @click="openHref">
             <span>
                Оформить тариф
